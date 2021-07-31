@@ -36,3 +36,9 @@ body{
     #to-do-form button:focus{
       outline: none;
     }
+
+    .heading{
+      color: azure;
+      margin-left: 100px;
+      margin-top: 10px;
+    }

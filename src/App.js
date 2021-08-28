@@ -1,43 +1,3 @@
-// import React,{useState} from 'react';
-// import './App.css';
-// import './index.css';
-
-//  const App =()=>
-//  {
-//    const [inputList, setInputList] = useState("");
-//    const [Items, setItems] = useState([]);
-//    const itemEvent = (event) =>{
-//     setInputList(event.target.value)
-//    }
-//     const listOfItems = () =>
-//     {
-//     setItems((oldItems) => {
-//       return [oldItems,inputList];
-//     });
-//     };
-
-   
-//    return(
-//    <>
-//    <div className="main_div">
-//      <div className="center_div">
-//        <br/>
-//        <h1>To DO List</h1>
-//        <br/>
-//        <input type="text" placeholder='Add a item' onChange={itemEvent}/>
-//        <button onClick = {listOfItems}>+</button>
-//        <ul>
-//        { Items.map((intemval) => {
-//           return <li> {intemval} </li>;
-//           })} 
-//        </ul>
-//      </div>
-//    </div>
-//    </>)
-//  }
-// export default App;
-
-
 import React from 'react';
 import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -49,6 +9,7 @@ import ListItems from './ListItems.js'
 library.add(faTrash)
 
 class App extends React.Component {
+  
   constructor(props){
     super(props);
     this.state = {
@@ -68,13 +29,17 @@ class App extends React.Component {
     const newItem = this.state.currentItem;
     if(newItem.text !==""){
       const items = [...this.state.items, newItem];
+       localStorage.setItem("list",items[0]);
+      
     this.setState({
       items: items,
       currentItem:{
         text:'',
         key:''
       }
+        
     })
+    console.log(items[0]);
     }
   }
   handleInput(e){
@@ -100,15 +65,20 @@ class App extends React.Component {
       if(item.key===key){
         console.log(item.key +"    "+key)
         item.text= text;
-      }
+      } 
     })
     this.setState({
       items: items
     })
-    
+
    
   }
  render(){
+  if(this.state.items[0]!==null){
+     const items = localStorage.getItem("list")
+     console.log(items)
+    }
+    
   return (
     <div className="App">
       <header>
@@ -120,11 +90,9 @@ class App extends React.Component {
         <p>{this.state.items.text}</p>
         
           <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate}/>
-        
       </header>
     </div>
   );
  }
 }
-
 export default App;
